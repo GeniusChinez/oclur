@@ -19,17 +19,24 @@ namespace oclur {
     }
 
     template <typename T>
-    bool Engine::print_location_if_possible(const T& data) const {
-        if constexpr(std::is_same_v<std::decay_t<T>, Location>) {
-            std::cout << data.format();
-        }
-        else if constexpr(std::is_same_v<std::decay_t<T>, Location*>) {
-            std::cout << data->format();
-        }
-        else {
-            return false;
-        }
+    bool Engine::print_location_if_possible(const T& data) const
+        requires requires (T t) {t->format();}
+    {
+        std::cout << data->format();
         return true;
+    }
+
+    template <typename T>
+    bool Engine::print_location_if_possible(const T& data) const
+        requires requires (T t) {t.format();}
+    {
+        std::cout << data.format();
+        return true;
+    }
+
+    template <typename T>
+    bool Engine::print_location_if_possible(const T& data) const {
+        return false;
     }
 
     void Engine::print_issue_tail() const {

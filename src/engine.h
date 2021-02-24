@@ -37,6 +37,16 @@ namespace oclur {
         [[nodiscard]] 
         bool print_location_if_possible(const T&) const;
 
+        template <typename T>
+        [[nodiscard]] 
+        bool print_location_if_possible(const T&) const
+            requires requires (T t) {t->format();};
+
+        template <typename T>
+        [[nodiscard]] 
+        bool print_location_if_possible(const T&) const
+            requires requires (T t) {t.format();};
+
         template <typename ...Args>
         void print_issue_tail(Args&&...) const;
         void print_issue_tail() const;
