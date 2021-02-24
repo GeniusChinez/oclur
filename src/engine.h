@@ -23,15 +23,6 @@ namespace oclur {
 
         ~Engine();
 
-    private:
-        template <typename T>
-        [[nodiscard]] 
-        bool print_location_if_possible(const T&) const;
-
-        template <typename ...Args>
-        void print_issue_tail(Args&&...) const;
-        void print_issue_tail() const;
-
         template <typename T, typename ...Args> 
         void report_warning(const T&, Args&&...);
 
@@ -40,6 +31,15 @@ namespace oclur {
 
         template <typename T, typename ...Args> 
         void report_fatal_error(const T&, Args&&...);
+
+    private:
+        template <typename T>
+        [[nodiscard]] 
+        bool print_location_if_possible(const T&) const;
+
+        template <typename ...Args>
+        void print_issue_tail(Args&&...) const;
+        void print_issue_tail() const;
 
         void increment_number_of_errors();
         void increment_number_of_warnings();
